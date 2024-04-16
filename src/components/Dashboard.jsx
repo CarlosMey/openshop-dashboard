@@ -1,14 +1,22 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import DashboardStatsGrid from '../components/DashboardStatsGrid'
+import TransactionChart from '../components/TransactionChart'
+import RecentOrders from '../components/RecentOrders'
+import BuyerProfileChart from '../components/BuyerProfileChart'
+// import PopularProducts from '../components/PopularProducts'
 
-export default function Dashboard(){
-    return (
-        <div>
-            <p>this is Dashboard</p>
-            <Link className='underline' to="/products">
-                Go to Products
-            </Link>
-        </div>
-    )
-    
+export default function Dashboard() {
+	return (
+		<div className="flex flex-col gap-4">
+			<DashboardStatsGrid />
+			<div className="flex flex-row gap-4 w-full">
+				<TransactionChart />
+				<BuyerProfileChart />
+			</div>
+			<div className="flex flex-row gap-4 w-full">
+				<RecentOrders />
+				{/* <PopularProducts /> */}
+			</div>
+		</div>
+	)
 }
