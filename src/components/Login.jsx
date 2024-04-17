@@ -38,11 +38,11 @@ export default function Login() {
       }
     }
     
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
       setError(Validation(values));
     
-      onSubmit(e);
+      await onSubmit(e);
     }
 
     return (

@@ -57,11 +57,11 @@ export default function Register() {
         }
     };
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         setError(ValidationRegister(values));
 
-        onSubmit(e);
+        await onSubmit(e);
     }
 
     return (
