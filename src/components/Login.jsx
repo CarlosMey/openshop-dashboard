@@ -19,41 +19,31 @@ export default function Login() {
         setValues({...values, [e.target.name]: e.target.value})
     }
 
-    function handleSubmit(e){
-        e.preventDefault();
-        setError(Validation(values));
-
-        onSubmit(e);
-    }
-
-    // useEffect(() => {
-    //     if(Object.keys(errors).length === 0 && (values.email !== "" && values.password !== "")){
-    //         alert("Formulario Enviado")
-    //     }, [errors]
-    // }, [errors])
-
-
-
-
     const navigate = useNavigate();
-    const onSubmit = async( e ) => {
-        e.preventDefault();
 
-        if(values.email !== '' && values.password !== ''){
-          try{
-            const {data} = await axios.post('auth/login',{
-                email: values.email,
-                password: values.password
-              });
-            console.log('Data: ',data);
-            navigate("/");
-          }catch (error){
-            console.log(error);
-          }
-
+    const onSubmit = async (e) => {
+      e.preventDefault();
+    
+      if (values.email !== '' && values.password !== '') {
+        try {
+          const { data } = await axios.post('auth/login', {
+            email: values.email,
+            password: values.password
+          });
+          console.log('Data: ', data);
+          navigate("/");
+        } catch (error) {
+          console.log(error);
         }
-
       }
+    }
+    
+    function handleSubmit(e) {
+      e.preventDefault();
+      setError(Validation(values));
+    
+      onSubmit(e);
+    }
 
     return (
         <div>

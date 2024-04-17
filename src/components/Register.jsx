@@ -23,42 +23,46 @@ export default function Register() {
 
     const [errors, setError] = useState({})
     
+    const navigate = useNavigate();
+
     function handleChange(e){
         setValues({...values, [e.target.name]: e.target.value})
     }
 
-    function handleSubmit(e){
-        e.preventDefault();
-        setError(ValidationRegister(values));
-
-        onSubmit(e);
-    }
-
-
-    const navigate = useNavigate();
-    const onSubmit = async( e ) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
-        if(values.email !== '' && values.password !== '' && values.retypedPassword !== '' && values.username !== '' && values.firstName !== '' && values.lastName !== ''){
-          try{
+        if (
+            values.email !== '' &&
+            values.password !== '' &&
+            values.retypedPassword !== '' &&
+            values.username !== '' &&
+            values.firstName !== '' &&
+            values.lastName !== ''
+        ) {
+            try {
             const request = {
                 username: values.username,
                 password: values.password,
                 retypedPassword: values.retypedPassword,
                 firstName: values.firstName,
                 lastName: values.lastName,
-                username: values.username,
-              };
-              const {data} = await axios.post('users', {...request});
-            console.log('Data: ',data);
-            navigate("/");
-          }catch (error){
+            };
+            const { data } = await axios.post('users', { ...request });
+            console.log('Data: ', data);
+            navigate('/');
+            } catch (error) {
             console.log(error);
-          }
-
+            }
         }
+    };
 
-      }
+    function handleSubmit(e) {
+        e.preventDefault();
+        setError(ValidationRegister(values));
+
+        onSubmit(e);
+    }
 
     return (
         <div>
