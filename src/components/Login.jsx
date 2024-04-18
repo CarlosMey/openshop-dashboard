@@ -39,14 +39,13 @@ export default function Login() {
         <div>
             <form onSubmit={handleSubmit}>
                 {/* <form onSubmit={ onSubmit }> */}
-                <div className="h-screen text-gray-900 body-font">
+                <div className="h-screen flex items-center text-gray-900 body-font">
                     <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
                         <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
                             <img src="https://djioficial.la/img/vooxell.png" alt="" />
-                            <h1 className="title-font font-medium text-3xl  leading-relaxed">
-                            You have data, we give you a new dimension
+                            <h1 className="hidden title-font font-medium text-3xl md:block leading-relaxed">
+                                You have data, we give you a new dimension
                             </h1>
-
                         </div>
                         <div className="lg:w-2/6 md:w-1/2 border-2 border-green-600 bg-opacity-50 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
                             <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Sign Up</h2>
