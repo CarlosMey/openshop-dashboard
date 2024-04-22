@@ -4,6 +4,8 @@ import TransactionChart from '../components/TransactionChart'
 import RecentOrders from '../components/RecentOrders'
 import BuyerProfileChart from '../components/BuyerProfileChart'
 // import PopularProducts from '../components/PopularProducts'
+import {NextUIProvider} from "@nextui-org/react";
+
 
 export default function Dashboard() {
 	return (
@@ -14,7 +16,9 @@ export default function Dashboard() {
 				<BuyerProfileChart />
 			</div>
 			<div className="flex flex-row gap-4 w-full">
+			<NextUIProvider>
 				<RecentOrders />
+			</NextUIProvider>
 				{/* <PopularProducts /> */}
 			</div>
 		</div>
