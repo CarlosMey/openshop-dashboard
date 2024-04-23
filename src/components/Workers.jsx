@@ -34,47 +34,49 @@ const statusColorMap = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["name", "apPat", "charge", "documentType", "documentNumber", 'actions'];
 
 
 
 
 export default function Workers() {
 
+  const [loading, setLoading] = useState(true); 
   const [workers, setWorkers] = useState([]);
 
   const queryParams = {
-    limit: 10, // Número máximo de resultados por página
+    limit: 0, // Número máximo de resultados por página
     page: 1,    // Número de página 
     input : "",
   };
 
   useEffect(() => {
-      async function fetchData() {
-          try {
-              const { data } = await axios.get('workers',{
+    async function fetchData() {
+        try {
+            const { data } = await axios.get('workers', {
                 params: queryParams
-              });
-              console.log('Data: ', data);
-              setWorkers(data);
-              console.log(workers);
-          } catch (error) {
-              console.log('Error:', error);
-          }
-      }
+            });
+            console.log('Data: ', data.data);
+            setWorkers(data.data);
+            setLoading(false); // Update loading state when data fetching is complete
+        } catch (error) {
+            console.log('Error:', error);
+            setLoading(false); // Update loading state in case of error
+        }
+    }
 
-      fetchData();
-  }, []);
+    fetchData();
+}, []);
 
 
     const [filterValue, setFilterValue] = React.useState("");
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
     const [statusFilter, setStatusFilter] = React.useState("all");
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(2);
     const [sortDescriptor, setSortDescriptor] = React.useState({
-      column: "age",
-      direction: "ascending",
+      column: "id",
+      direction: "descending",
     });
     const [page, setPage] = React.useState(1);
   
@@ -87,21 +89,25 @@ export default function Workers() {
     }, [visibleColumns]);
   
     const filteredItems = React.useMemo(() => {
-      let filteredUsers = [...users];
+      if (!Array.isArray(workers)) return []; // Ensure workers is an array before filtering
+
+      let filteredWorkers = [...workers];
+  
+      if (loading) return []; // Return empty array if still loading
   
       if (hasSearchFilter) {
-        filteredUsers = filteredUsers.filter((user) =>
-          user.name.toLowerCase().includes(filterValue.toLowerCase()),
-        );
+          filteredWorkers = filteredWorkers.filter(worker =>
+              worker.name.toLowerCase().includes(filterValue.toLowerCase())
+          );
       }
       if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-        filteredUsers = filteredUsers.filter((user) =>
-          Array.from(statusFilter).includes(user.status),
-        );
+          filteredWorkers = filteredWorkers.filter(worker =>
+              Array.from(statusFilter).includes(worker.status)
+          );
       }
   
-      return filteredUsers;
-    }, [users, filterValue, statusFilter]);
+      return filteredWorkers;
+  }, [workers, filterValue, statusFilter, loading]);
   
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
   
@@ -122,32 +128,34 @@ export default function Workers() {
       });
     }, [sortDescriptor, items]);
   
-    const renderCell = React.useCallback((user, columnKey) => {
-      const cellValue = user[columnKey];
+    const renderCell = React.useCallback((worker, columnKey) => {
+      const cellValue = worker[columnKey];
   
       switch (columnKey) {
         case "name":
           return (
-            <User
-              avatarProps={{radius: "lg", src: user.avatar}}
-              description={user.email}
-              name={cellValue}
-            >
-              {user.email}
-            </User>
+            // <User
+            //   avatarProps={{radius: "lg", src: user.avatar}}
+            //   description={user.email}
+            //   name={cellValue}
+            // >
+            //   {user.email}
+            // </User>
+            <div>{worker.name}</div>
           );
-        case "role":
+        case "apPat":
           return (
             <div className="flex flex-col">
               <p className="text-bold text-small capitalize">{cellValue}</p>
-              <p className="text-bold text-tiny capitalize text-default-400">{user.team}</p>
+              <p className="text-bold text-tiny capitalize text-default-400">{worker.apPat}</p>
             </div>
           );
-        case "status":
+        case "charge":
           return (
-            <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
-              {cellValue}
-            </Chip>
+            <div>{worker.charge}</div>
+            // <Chip className="capitalize" color={statusColorMap[worker.status]} size="sm" variant="flat">
+            //   {cellValue}
+            // </Chip>
           );
         case "actions":
           return (
@@ -209,17 +217,17 @@ export default function Workers() {
             <Input
               isClearable
               className="w-full sm:max-w-[44%]"
-              placeholder="Search by name..."
+              placeholder="Buscar por campo..."
               startContent={<SearchIcon />}
               value={filterValue}
               onClear={() => onClear()}
               onValueChange={onSearchChange}
             />
             <div className="flex gap-3">
-              <Dropdown>
+              {/* <Dropdown>
                 <DropdownTrigger className="hidden sm:flex">
                   <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                    Status
+                    Cargo
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu
@@ -236,11 +244,11 @@ export default function Workers() {
                     </DropdownItem>
                   ))}
                 </DropdownMenu>
-              </Dropdown>
+              </Dropdown> */}
               <Dropdown>
                 <DropdownTrigger className="hidden sm:flex">
                   <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                    Columns
+                    Columnas
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu
@@ -259,21 +267,21 @@ export default function Workers() {
                 </DropdownMenu>
               </Dropdown>
               <Button color="primary" endContent={<PlusIcon />}>
-                Add New
+                Agregar Colaborador
               </Button>
             </div>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-default-400 text-small">Total {users.length} users</span>
+            <span className="text-default-400 text-small">Total de Colaboradores: {workers.length}</span>
             <label className="flex items-center text-default-400 text-small">
-              Rows per page:
+              Filas por pagina:
               <select
                 className="bg-transparent outline-none text-default-400 text-small"
                 onChange={onRowsPerPageChange}
               >
                 <option value="5">5</option>
                 <option value="10">10</option>
-                <option value="15">15</option>
+                <option value="20">20</option>
               </select>
             </label>
           </div>
@@ -284,7 +292,7 @@ export default function Workers() {
       statusFilter,
       visibleColumns,
       onRowsPerPageChange,
-      users.length,
+      workers.length,
       onSearchChange,
       hasSearchFilter,
     ]);
@@ -294,8 +302,8 @@ export default function Workers() {
         <div className="py-2 px-2 flex justify-between items-center">
           <span className="w-[30%] text-small text-default-400">
             {selectedKeys === "all"
-              ? "All items selected"
-              : `${selectedKeys.size} of ${filteredItems.length} selected`}
+              ? "Todos los items seleccionados"
+              : `${selectedKeys.size} de ${filteredItems.length} Seleccionados`}
           </span>
           <Pagination
             isCompact
@@ -308,10 +316,10 @@ export default function Workers() {
           />
           <div className="hidden sm:flex w-[30%] justify-end gap-2">
             <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-              Previous
+              Anterior
             </Button>
             <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-              Next
+              Siguiente
             </Button>
           </div>
         </div>
@@ -346,7 +354,7 @@ export default function Workers() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={"No users found"} items={sortedItems}>
+        <TableBody emptyContent={"Ningun colaborador encontrado"} items={sortedItems}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
