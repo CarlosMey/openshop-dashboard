@@ -6,6 +6,8 @@ const columns = [
   {name: "Cargo", uid: "charge", sortable: true},
   {name: "Tipo de Documento", uid: "documentType"},
   {name: "Numero de Documento", uid: "documentNumber"},
+  {name: "Jefe Directo", uid: "chiefOfficerName"},
+  {name: "Tipo de Contrato", uid: "contractType"},
   // {name: "STATUS", uid: "status", sortable: true},
   {name: "Acciones", uid: "actions"},
 ];

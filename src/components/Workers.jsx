@@ -34,7 +34,7 @@ const statusColorMap = {
     vacation: 'warning'
 }
 
-const INITIAL_VISIBLE_COLUMNS = ['name', 'apPat', 'charge', 'documentType', 'documentNumber', 'actions']
+const INITIAL_VISIBLE_COLUMNS = ['name', 'apPat', 'charge', 'documentType', 'documentNumber','chiefOfficerName','contractType','actions']
 
 export default function Workers() {
     const [loading, setLoading] = useState(true)
@@ -53,7 +53,12 @@ export default function Workers() {
                     params: queryParams
                 })
                 console.log('Data: ', data.data)
-                setWorkers(data.data)
+                const formatData = data.data.map(worker => {
+                  return {
+                    ...worker, chiefOfficerName: worker.chiefOfficer !== null ? worker.chiefOfficer.name : "Ninguno"
+                  }
+                })
+                setWorkers(formatData)
                 setLoading(false) // Update loading state when data fetching is complete
             } catch (error) {
                 console.log('Error:', error)
@@ -68,7 +73,7 @@ export default function Workers() {
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]))
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS))
     const [statusFilter, setStatusFilter] = React.useState('all')
-    const [rowsPerPage, setRowsPerPage] = React.useState(2)
+    const [rowsPerPage, setRowsPerPage] = React.useState(3)
     const [sortDescriptor, setSortDescriptor] = React.useState({
         column: 'id',
         direction: 'descending'
@@ -339,7 +344,7 @@ export default function Workers() {
                 wrapper: 'max-h-[382px]'
             }}
             selectedKeys={selectedKeys}
-            selectionMode="multiple"
+            // selectionMode="multiple"
             sortDescriptor={sortDescriptor}
             topContent={topContent}
             topContentPlacement="outside"
