@@ -4,7 +4,6 @@ import Dashboard from "./components/Dashboard";
 import Products from "./components/Products";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Workers from "./components/Workers";
 
 function App() {
   return (
@@ -13,7 +12,6 @@ function App() {
         <Route path="/" element={<Layout/>}>
           <Route index element={<Dashboard/>}/>
           <Route path="products" element={<Products/>}/>
-          <Route path="workers" element={<Workers/>}/>
         </Route>
         <Route path="login" element={<Login/>}/>
         <Route path="register" element={<Register/>}/>

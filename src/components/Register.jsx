@@ -63,8 +63,6 @@ export default function Register() {
         await onSubmit(e)
     }
 
-    const isFormFilled = values.email && values.password && values.retypedPassword && values.username && values.firstName && values.lastName;
-
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -214,7 +212,7 @@ export default function Register() {
                                     className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-blue-900 rounded border border-gray-600 focus:border-blue-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                 /> */}
                             </div>
-                            <button disabled={!isFormFilled} className="text-white bg-green-700 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
+                            <button className="text-white bg-green-700 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
                                 Register
                             </button>
                         </div>

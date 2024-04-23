@@ -29,9 +29,9 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <HiOutlineShoppingCart />
 	},
 	{
-		key: 'workers',
-		label: 'Workers',
-		path: '/workers',
+		key: 'customers',
+		label: 'Customers',
+		path: '/customers',
 		icon: <HiOutlineUsers />
 	},
 	{
