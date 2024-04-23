@@ -192,6 +192,33 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "refresh token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pc3RlckBnbWFpbC5jb20iLCJzdWIiOjMsImlhdCI6MTcxMzgzMzM1MSwiZXhwIjoxNzEzODM2OTUxfQ.mtlGONro_KcyDGs98_3fExnnMgD8j7ByvpwE30Ww1S8\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/auth/refresh",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"auth",
+						"refresh"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
