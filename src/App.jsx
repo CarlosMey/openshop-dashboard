@@ -5,6 +5,7 @@ import Products from "./components/Products";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Workers from "./components/Workers";
+import WorkerCreate from "./components/workerCreate";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route index element={<Dashboard/>}/>
           <Route path="products" element={<Products/>}/>
           <Route path="workers" element={<Workers/>}/>
+          <Route path="workers/create" element={<WorkerCreate/>}/>
         </Route>
         <Route path="login" element={<Login/>}/>
         <Route path="register" element={<Register/>}/>
