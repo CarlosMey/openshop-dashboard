@@ -2,13 +2,25 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from '../axios'
 import Validation from './validation/validation'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToken } from '../tokenReducer'
+
+
 
 export default function Login() {
+
+    const dispatch = useDispatch();
+
+    const tokens = useSelector((state) =>state.tokens);
+    console.log("useSelector: "+tokens);
+
+
+
     const navigate = useNavigate()
 
     const [values, setValues] = useState({
-        email: '',
-        password: ''
+        email: 'mister@gmail.com',
+        password: 'password'
     })
 
     const [errors, setError] = useState({})
@@ -27,8 +39,12 @@ export default function Login() {
                 email: values.email,
                 password: values.password
             })
+            dispatch(addToken(data.token))
 
-            console.log('Data: ', data)
+            // console.log(values.email, values.password)
+
+            console.log('Data: ', data.token)
+
             navigate('/')
         } catch (error) {
             console.log(error)
@@ -60,7 +76,7 @@ export default function Login() {
                                     onChange={handleChange}
                                     id="email"
                                     name="email"
-                                    className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-green-900 rounded border border-gray-600 focus:border-green-700 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                    className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-green-900 rounded border border-gray-600 focus:border-green-700 text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                 />
                                 {errors.email && <p style={{ color: 'red', fontSize: '13px' }}>{errors.email}</p>}
                             </div>
@@ -74,7 +90,7 @@ export default function Login() {
                                     onChange={handleChange}
                                     id="password"
                                     name="password"
-                                    className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-green-900 rounded border border-gray-600 focus:border-green-700 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                    className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-green-900 rounded border border-gray-600 focus:border-green-700 text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                 />
                                 {errors.password && <p style={{ color: 'red', fontSize: '13px' }}>{errors.password}</p>}
                             </div>
