@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getOrderEmployees } from '../lib/helpers'
-import {EditIcon} from "./EditIcon";
-import {DeleteIcon} from "./DeleteIcon";
-import {EyeIcon} from "./EyeIcon";
-import {Tooltip } from "@nextui-org/react";
 import axios from '../axios'
 // import PopularProducts from '../components/PopularProducts'
 
@@ -171,23 +167,20 @@ export default function Workers() {
                 )
             case 'actions':
                 return (
-                    <div className="relative flex items-center gap-2">
-                    <Tooltip content="Details">
-                      <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                        <EyeIcon />
-                      </span>
-                    </Tooltip>
-                    <Tooltip content="Edit user">
-                      <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                        <EditIcon />
-                      </span>
-                    </Tooltip>
-                    <Tooltip color="danger" content="Delete user">
-                      <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                        <DeleteIcon />
-                      </span>
-                    </Tooltip>
-                  </div>
+                    <div className="relative flex justify-end items-center gap-2">
+                        <Dropdown>
+                            <DropdownTrigger>
+                                <Button isIconOnly size="sm" variant="light">
+                                    <VerticalDotsIcon className="text-default-300" />
+                                </Button>
+                            </DropdownTrigger>
+                            <DropdownMenu>
+                                <DropdownItem>Mostrar</DropdownItem>
+                                <DropdownItem>Editar</DropdownItem>
+                                <DropdownItem>Desactivar</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </div>
                 )
             default:
                 return cellValue
@@ -282,7 +275,7 @@ export default function Workers() {
                             </DropdownMenu>
                         </Dropdown>
                         <Button color="primary" endContent={<PlusIcon />}>
-                            <Link className='text-white' to={'create'}>Agregar Colaborador</Link>
+                            Agregar Colaborador
                         </Button>
                     </div>
                 </div>
