@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { getOrderEmployees } from '../lib/helpers'
-import axios from '../axios'
-// import PopularProducts from '../components/PopularProducts'
+import axios from '../axios/axios'
 
 import {
     Table,
@@ -17,24 +14,31 @@ import {
     Dropdown,
     DropdownMenu,
     DropdownItem,
-    Chip,
-    User,
     Pagination
 } from '@nextui-org/react'
-import { PlusIcon } from '../PlusIcon'
-import { VerticalDotsIcon } from '../VerticalDotsIcon'
-import { SearchIcon } from '../SearchIcon'
-import { ChevronDownIcon } from '../ChevronDownIcon'
-import { columns, users, statusOptions } from '../data'
-import { capitalize } from '../utils'
+import { PlusIcon } from './icons/PlusIcon'
+import { VerticalDotsIcon } from './icons/VerticalDotsIcon'
+import { SearchIcon } from './icons/SearchIcon'
+import { ChevronDownIcon } from './icons/ChevronDownIcon'
+import { columns, statusOptions } from '../utils/data-types/data'
+import { capitalize } from '../lib/helpers/utils'
 
-const statusColorMap = {
-    active: 'success',
-    paused: 'danger',
-    vacation: 'warning'
-}
+// const statusColorMap = {
+//     active: 'success',
+//     paused: 'danger',
+//     vacation: 'warning'
+// }
 
-const INITIAL_VISIBLE_COLUMNS = ['name', 'apPat', 'charge', 'documentType', 'documentNumber','chiefOfficerName','contractType','actions']
+const INITIAL_VISIBLE_COLUMNS = [
+    'name',
+    'apPat',
+    'charge',
+    'documentType',
+    'documentNumber',
+    'chiefOfficerName',
+    'contractType',
+    'actions'
+]
 
 export default function Workers() {
     const [loading, setLoading] = useState(true)
@@ -53,10 +57,11 @@ export default function Workers() {
                     params: queryParams
                 })
                 console.log('Data: ', data.data)
-                const formatData = data.data.map(worker => {
-                  return {
-                    ...worker, chiefOfficerName: worker.chiefOfficer !== null ? worker.chiefOfficer.name : "Ninguno"
-                  }
+                const formatData = data.data.map((worker) => {
+                    return {
+                        ...worker,
+                        chiefOfficerName: worker.chiefOfficer !== null ? worker.chiefOfficer.name : 'Ninguno'
+                    }
                 })
                 setWorkers(formatData)
                 setLoading(false) // Update loading state when data fetching is complete

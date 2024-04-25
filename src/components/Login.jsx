@@ -1,20 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from '../axios'
+import axios from '../axios/axios'
 import Validation from './validation/validation'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToken } from '../tokenReducer'
-
-
+import { addToken } from '../features/tokenReducer'
 
 export default function Login() {
+    const dispatch = useDispatch()
 
-    const dispatch = useDispatch();
-
-    const tokens = useSelector((state) =>state.tokens);
-    console.log("useSelector: "+tokens);
-
-
+    // const tokens = useSelector((state) => state.tokens)
 
     const navigate = useNavigate()
 
@@ -39,19 +33,16 @@ export default function Login() {
                 email: values.email,
                 password: values.password
             })
+
             dispatch(addToken(data.token))
-
-            // console.log(values.email, values.password)
-
-            console.log('Data: ', data.token)
-
             navigate('/')
+
         } catch (error) {
             console.log(error)
         }
     }
 
-    const isFormFilled = values.email && values.password;
+    const isFormFilled = values.email && values.password
 
     return (
         <div>
@@ -94,7 +85,10 @@ export default function Login() {
                                 />
                                 {errors.password && <p style={{ color: 'red', fontSize: '13px' }}>{errors.password}</p>}
                             </div>
-                            <button disabled={!isFormFilled} className="text-white bg-green-700 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
+                            <button
+                                disabled={!isFormFilled}
+                                className="text-white bg-green-700 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                            >
                                 Log In
                             </button>
                         </div>

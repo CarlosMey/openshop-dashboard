@@ -1,4 +1,4 @@
-import React from "react";
+
 const columns = [
   {name: "ID", uid: "id", sortable: true},
   {name: "Nombre", uid: "name", sortable: true},

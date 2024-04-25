@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from '../axios'
+import { useNavigate } from 'react-router-dom'
+import axios from '../axios/axios'
 import ValidationRegister from './validation/validationRegister'
 
 export default function Register() {
@@ -63,7 +63,13 @@ export default function Register() {
         await onSubmit(e)
     }
 
-    const isFormFilled = values.email && values.password && values.retypedPassword && values.username && values.firstName && values.lastName;
+    const isFormFilled =
+        values.email &&
+        values.password &&
+        values.retypedPassword &&
+        values.username &&
+        values.firstName &&
+        values.lastName
 
     return (
         <div>
@@ -166,7 +172,10 @@ export default function Register() {
                                 />
                                 {errors.lastName && <p style={{ color: 'red', fontSize: '13px' }}>{errors.lastName}</p>}
                             </div>
-                            <button disabled={!isFormFilled} className="text-white bg-green-700 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
+                            <button
+                                disabled={!isFormFilled}
+                                className="text-white bg-green-700 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                            >
                                 Register
                             </button>
                         </div>
