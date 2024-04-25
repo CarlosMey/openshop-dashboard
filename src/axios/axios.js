@@ -1,11 +1,10 @@
 import axios from 'axios'
-// import { store } from "./store"; // Suponiendo que tienes un store.js donde exportas el store de Redux
 import { store } from '../store'
 import { addToken } from '../features/tokenReducer'
-import { redirect } from 'react-router-dom'
+import { redirect } from 'react-router-dom' 
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3005/'
+    baseURL: 'https://vooxel-admin.onrender.com/'
 })
 
 axiosInstance.interceptors.request.use(

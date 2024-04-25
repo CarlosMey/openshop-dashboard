@@ -11,10 +11,9 @@ const tokenSlice = createSlice({
             localStorage.setItem('token', action.payload) // Guardar el token en localStorage
             return action.payload
         },
-        removeToken: (state) => {
-            state.token = ''
+        removeToken: (state, action) => {
             localStorage.removeItem('token') // Eliminar el token de localStorage
-            return ''
+            return action.payload
         }
     }
 })
