@@ -8,7 +8,7 @@ import { addToken } from '../features/tokenReducer'
 export default function Login() {
     const dispatch = useDispatch()
 
-    // const tokens = useSelector((state) => state.tokens)
+    const tokens = useSelector((state) => state.tokens)
 
     const navigate = useNavigate()
 
@@ -33,7 +33,7 @@ export default function Login() {
                 email: values.email,
                 password: values.password
             })
-
+            console.log('Data:', data);
             dispatch(addToken(data.token))
             navigate('/')
 
